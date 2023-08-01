@@ -1,8 +1,10 @@
 package com.example.commerce.models;
 
 import com.example.commerce.enums.CategoriaProduto;
+import com.example.commerce.request.ProdutoAtualizarRequest;
 import com.example.commerce.request.ProdutoCadastroRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,8 +19,9 @@ import java.time.LocalDateTime;
 
 @Entity(name = "produtos")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +36,25 @@ public class Produto {
     private Double preco;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fabricaco;
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate cadastro;
-
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime cadastro;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime atualizacao;
     public Produto(ProdutoCadastroRequest produtoCadastroRequest) {
         this.nome = produtoCadastroRequest.getNome();
         this.categoria = produtoCadastroRequest.getCategoria();
         this.preco = produtoCadastroRequest.getPreco();
         this.fabricaco = produtoCadastroRequest.getFabricacao();
         this.cadastro = produtoCadastroRequest.getCadastro();
+    }
+
+    public void atualizarInformacoes(ProdutoAtualizarRequest produtoAtualizarRequest) {
+        if (produtoAtualizarRequest.getNome() != null) this.nome = produtoAtualizarRequest.getNome();
+
+        if (produtoAtualizarRequest.getPreco()!= null)  this.preco = produtoAtualizarRequest.getPreco();
+
+        if(produtoAtualizarRequest.getCategoriaProduto() != null) this.categoria = produtoAtualizarRequest.getCategoriaProduto();
+
+        this.atualizacao = produtoAtualizarRequest.getAtualizacao();
     }
 }
