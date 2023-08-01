@@ -1,6 +1,6 @@
 package com.example.commerce.models;
 
-import com.example.commerce.enums.Categoria;
+import com.example.commerce.enums.CategoriaCliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +20,5 @@ public class Cliente {
     private String senha;
     private LocalDateTime dataCadastro;
     @Enumerated(EnumType.STRING)
-    private Categoria categoria;
+    private CategoriaCliente categoriaCliente;
 }

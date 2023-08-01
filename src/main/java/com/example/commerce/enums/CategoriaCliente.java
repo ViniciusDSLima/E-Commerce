@@ -1,6 +1,6 @@
 package com.example.commerce.enums;
 
-public enum Categoria {
+public enum CategoriaCliente {
     Vip,
     Premium,
     comum

@@ -1,6 +1,6 @@
 package com.example.commerce.enums;
 
-public enum Descricao {
+public enum CategoriaProduto {
     Automotivos,
     Bebes,
     Beleza,

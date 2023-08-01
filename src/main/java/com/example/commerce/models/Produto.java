@@ -1,6 +1,8 @@
 package com.example.commerce.models;
 
-import com.example.commerce.enums.Descricao;
+import com.example.commerce.enums.CategoriaProduto;
+import com.example.commerce.request.ProdutoCadastroRequest;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "produtos")
@@ -24,14 +27,20 @@ public class Produto {
     private String nome;
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Descricao descricao;
+    private CategoriaProduto categoria;
     @NotNull
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     private Double preco;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, fallbackPatterns = {"dd/MM/yyyy"})
-    private LocalDateTime dataFabricacao;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, fallbackPatterns = {"dd/MM/yyyy"})
-    private LocalDateTime dataCadastro;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, fallbackPatterns = {"dd/MM/yyyy"})
-    private LocalDateTime dataVenda;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fabricaco;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate cadastro;
+
+    public Produto(ProdutoCadastroRequest produtoCadastroRequest) {
+        this.nome = produtoCadastroRequest.getNome();
+        this.categoria = produtoCadastroRequest.getCategoria();
+        this.preco = produtoCadastroRequest.getPreco();
+        this.fabricaco = produtoCadastroRequest.getFabricacao();
+        this.cadastro = produtoCadastroRequest.getCadastro();
+    }
 }
