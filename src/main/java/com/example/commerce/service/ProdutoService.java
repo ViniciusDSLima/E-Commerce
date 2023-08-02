@@ -1,5 +1,6 @@
 package com.example.commerce.service;
 
+import com.example.commerce.DTO.ProdutoDTO;
 import com.example.commerce.models.Produto;
 import com.example.commerce.repository.ProdutoRepository;
 import com.example.commerce.request.ProdutoAtualizarRequest;
@@ -8,6 +9,7 @@ import com.example.commerce.response.ProdutoAtualizarResponse;
 import com.example.commerce.response.ProdutoCadastroResponse;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +33,8 @@ public class ProdutoService {
 
         return new ProdutoAtualizarResponse(produto);
     }
-        
-    public Produto buscarProdutos(Pageable pageable) {
-        return (Produto) produtoRepository.findAllByAtivoTrue(pageable).map(Produto::new);
+    public Page<ProdutoDTO> buscarProdutosAtivos(Pageable pageable) {
+        return produtoRepository.findAllByAtivoTrue(pageable).map(ProdutoDTO::new);
     }
 
     public Optional<Produto> buscarProduto(Long id) {
@@ -44,4 +45,6 @@ public class ProdutoService {
         var produto = produtoRepository.getReferenceById(id);
         produto.excluir();
     }
+
+
 }

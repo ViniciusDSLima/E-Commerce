@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -51,10 +52,8 @@ public class ProdutoController {
             @ApiResponse(responseCode = "200", description = "Sucesso, Retorna todos os produtosDTO criados"),
             @ApiResponse(responseCode = "400", description = "Erro do negocio.")
     })
-    public ResponseEntity<Produto> buscarProdutos(@PageableDefault(size = 10, sort = {"categoria"}) Pageable pageable){
-        var produto = service.buscarProdutos(pageable);
-
-        return ResponseEntity.ok(produto);
+    public ResponseEntity bucarProdutos(@PageableDefault(size = 10, sort = {"categoria"})Pageable pageable){
+        return ResponseEntity.ok(service.buscarProdutosAtivos(pageable));
     }
 
     @GetMapping("/{id}")
