@@ -1,11 +1,17 @@
 package com.example.commerce.controller;
 
+import com.example.commerce.DTO.ClienteDTO;
+import com.example.commerce.DTO.ClientePageDTO;
 import com.example.commerce.request.ClienteAtualizaRequest;
 import com.example.commerce.request.ClienteCadastroRequest;
+import com.example.commerce.response.ClienteResponse;
 import com.example.commerce.service.CLienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,4 +45,17 @@ public class ClienteController {
     public ResponseEntity atualizarCliente(@RequestBody ClienteAtualizaRequest clienteAtualizaRequest){
         return ResponseEntity.status(HttpStatus.OK.value()).body(service.atualizarCliente(clienteAtualizaRequest));
     }
+
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    @Operation(summary = "buscar todos os clientes cadastrados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca todos os clientes"),
+            @ApiResponse(responseCode = "500", description = "Erro do servidor")
+    })
+    public ClientePageDTO findAll(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
+                                  @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize){
+        return service.findAll(page, pageSize);
+    }
 }
+

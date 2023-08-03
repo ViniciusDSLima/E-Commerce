@@ -1,13 +1,11 @@
 package com.example.commerce.request;
 
 import com.example.commerce.enums.CategoriaCliente;
-import com.example.commerce.enums.CategoriaProduto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
