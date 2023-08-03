@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -39,6 +40,7 @@ public class Produto {
     private LocalDate fabricaco;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime cadastro;
+    @Lazy
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime atualizacao;
     private Boolean ativo;
