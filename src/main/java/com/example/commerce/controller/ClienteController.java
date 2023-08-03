@@ -71,6 +71,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "inativa o cliente do servidor da loja")
     public ResponseEntity apagarCliente(@PathVariable Long id){
         service.apagarCliente(id);
 
