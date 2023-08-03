@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,24 @@ public class ClienteController {
     public ClientePageDTO findAll(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
                                   @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize){
         return service.findAll(page, pageSize);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @Operation(summary = "busca um cliente especifico pelo id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca o cliente"),
+            @ApiResponse(responseCode = "500", description = "Erro do servidor")
+    })
+    public ClienteDTO findById(@PathVariable @Positive Long id){
+        return service.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity apagarCliente(@PathVariable Long id){
+        service.apagarCliente(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
 

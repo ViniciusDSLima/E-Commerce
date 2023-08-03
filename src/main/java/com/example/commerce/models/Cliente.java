@@ -29,6 +29,7 @@ public class Cliente {
     private CategoriaCliente categoria;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime atualizacao;
+    private Boolean ativo;
 
     public Cliente(ClienteCadastroRequest clienteCadastroRequest) {
         this.nome = clienteCadastroRequest.getNome();
@@ -36,15 +37,7 @@ public class Cliente {
         this.senha = clienteCadastroRequest.getSenha();
         this.categoria = clienteCadastroRequest.getCategoria();
         this.cadastro = clienteCadastroRequest.getCadastro();
-    }
-
-    public Cliente(ClienteResponse clienteResponse) {
-        this.nome = clienteResponse.getNome();
-        this.email = clienteResponse.getEmail();
-        this.senha = clienteResponse.getSenha();
-        this.categoria = clienteResponse.getCategoria();
-        this.atualizacao = clienteResponse.getAtualizacao();
-        this.cadastro = clienteResponse.getCadastro();
+        this.ativo = true;
     }
 
     public void atualizarInformacoes(ClienteAtualizaRequest clienteAtualizaRequest) {
@@ -53,5 +46,9 @@ public class Cliente {
         if(clienteAtualizaRequest.getSenha() != null) this.senha = clienteAtualizaRequest.getSenha();
 
         this.atualizacao = clienteAtualizaRequest.getAtualizacao();
+    }
+
+    public void apagarCliente(Long id) {
+        this.ativo = false;
     }
 }

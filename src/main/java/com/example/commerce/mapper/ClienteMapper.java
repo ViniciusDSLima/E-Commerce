@@ -16,10 +16,11 @@ public class ClienteMapper {
         cliente.setCategoria(clienteDTO.categoria());
         cliente.setCadastro(clienteDTO.cadastro());
         cliente.setAtualizacao(clienteDTO.atualizacao());
+        cliente.setAtivo(clienteDTO.ativo());
         return cliente;
     }
 
     public ClienteDTO toDTO(Cliente cliente){
-        return new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getSenha(), cliente.getEmail(), cliente.getCadastro(), cliente.getCategoria(), cliente.getAtualizacao());
+        return new ClienteDTO(cliente.getId(), cliente.getNome(), cliente.getSenha(), cliente.getEmail(), cliente.getCadastro(), cliente.getCategoria(), cliente.getAtualizacao(), cliente.getAtivo());
     }
 }

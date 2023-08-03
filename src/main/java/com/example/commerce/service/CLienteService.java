@@ -2,6 +2,7 @@ package com.example.commerce.service;
 
 import com.example.commerce.DTO.ClienteDTO;
 import com.example.commerce.DTO.ClientePageDTO;
+import com.example.commerce.exceptions.CLienteNotFoundException;
 import com.example.commerce.mapper.ClienteMapper;
 import com.example.commerce.models.Cliente;
 import com.example.commerce.repository.ClienteRepository;
@@ -43,5 +44,14 @@ public class CLienteService {
 
         return new ClienteDTO(cliente);
     }
-    
+
+    public ClienteDTO findById(@Positive Long id) {
+        return clienteRepository.findById(id).map(clienteMapper::toDTO).orElseThrow(() -> new CLienteNotFoundException(id));
+    }
+
+    public void apagarCliente(Long id) {
+        Cliente cliente = clienteRepository.getReferenceById(id);
+        cliente.apagarCliente(id);
+
+    }
 }
